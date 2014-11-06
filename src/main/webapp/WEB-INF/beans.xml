@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:jaxws="http://cxf.apache.org/jaxws"
+        xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd">
+
+        <import resource="classpath:META-INF/cxf/cxf.xml" />
+        
+
+        <jaxws:endpoint 
+          id="helloWorld" 
+          implementor="com.rohan.api.HelloWorldImpl" 
+          address="/HelloWorld" />
+          
+        <jaxws:endpoint id="entityService" implementor="com.rohan.api.service.entity.EntityServiceImpl" address="/entity">
+        	<jaxws:inInterceptors>
+		      <bean class="org.apache.cxf.binding.soap.saaj.SAAJInInterceptor" />
+		      <bean class="org.apache.cxf.ws.security.wss4j.WSS4JInInterceptor">
+		        <constructor-arg>
+		          <map>
+		            <entry key="action" value="UsernameToken" />
+		            <entry key="passwordType" value="PasswordText" />
+		            <!-- <entry key="passwordCallbackClass" value="com.rohan.api.service.auth.ServicePasswordCallbackHandler" /> -->
+		            <entry key="passwordCallbackRef">
+		            	<ref bean="pwdHandler"/>
+		            </entry>
+		          </map>
+		        </constructor-arg>
+		      </bean>
+		    </jaxws:inInterceptors>
+        </jaxws:endpoint>  
+        
+        <bean id="pwdHandler" class="com.rohan.api.service.auth.ServicePasswordCallbackHandler" >
+        	<property name="entityRepository" ref="entityRepository"></property>
+        </bean>
+        
+        <bean id="entityRepository" class="com.rohan.api.repo.EntityRepositoryImpl" />
+</beans>
