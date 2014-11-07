@@ -15,8 +15,8 @@ public class EntityServiceImpl implements EntityService{
 	public List<String> getEntityName(long id) throws Exception {
 		if(id == 201){
 			List<String> entityList = new ArrayList<String>();
-			entityList.add("Rohan Tech Ltd");
-			entityList.add("brinal Tech Ltd");
+			entityList.add("Samsung Electronics");
+			entityList.add("Samsung Heavy Industries");
 			return entityList;
 		}
 		throw new Exception();
@@ -24,7 +24,7 @@ public class EntityServiceImpl implements EntityService{
 
 	@Override
 	public boolean addEntity(String entityName) {
-		if(entityName.equals("RTD Tech"))
+		if(entityName.equals("Samsung"))
 			return true;
 		else
 			return false;

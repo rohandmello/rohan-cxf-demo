@@ -36,7 +36,7 @@ public class EntityEndPointTest {
 	@Test
 	public void testGetEntityName() throws Exception {
 		List<String> entityList = service.getEntityName(201);
-		assertTrue(entityList.get(0).equals("Rohan Tech"));
+		assertTrue(entityList.get(0).equals("Samsung Electronics"));
 	}
 
 }
